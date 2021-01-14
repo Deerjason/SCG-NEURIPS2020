@@ -4,7 +4,6 @@
 
 ### Changes for Signed Nucleus
 * python SCG.py -r [algorithm] [optional:-d dataset]
-* python KOCG/KOCG.py (requires Matlab - change DATASET_LIST in KOCG.py and runKOCG_datasets.m to include only your desired dataset to speed up runtime)
 * see run.sh for some sample commands
 
 ## 1. Dependency

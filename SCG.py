@@ -69,30 +69,29 @@ if opt.dataset == 'all': # experiment: real-world datasets
             for node in S_2:
                 f.write(str(node) + ' ')
             f.write('-1\n')
-           
-        queue = [S_1 + S_2]
-        while len(queue) > 0:
-            subG = queue.pop()
+        subG = S_1 + S_2
+        while True:
             C, N, A = SCG(A, opt.rounding_strategy, set(subG), N)
             S_1, S_2 = get_subgraphs(C, N, A)
             S_1 = list(S_1)
             S_2 = list(S_2)
             S = S_1 + S_2
-            if len(S) >= 10:
-                if len(S_2) > len(S_1):
-                    S_1, S_2 = S_2, S_1
-                if len(S_2) == 0:
-                    for node in S_1:
-                        f.write(str(node) + ' ')
-                    f.write('-1 -1\n')
-                else:
-                    for node in S_1:
-                        f.write(str(node) + ' ')
-                    f.write('-1 ')
-                    for node in S_2:
-                        f.write(str(node) + ' ')
-                    f.write('-1\n')
-                queue.append(S)
+            if len(S) < 10:
+                break
+            if len(S_2) > len(S_1):
+                S_1, S_2 = S_2, S_1
+            if len(S_2) == 0:
+                for node in S_1:
+                    f.write(str(node) + ' ')
+                f.write('-1 -1\n')
+            else:
+                for node in S_1:
+                    f.write(str(node) + ' ')
+                f.write('-1 ')
+                for node in S_2:
+                    f.write(str(node) + ' ')
+                f.write('-1\n')
+            subG = S
         f.close()
 elif opt.dataset in DATASET_LIST:
     dataset = opt.dataset
@@ -123,29 +122,29 @@ elif opt.dataset in DATASET_LIST:
         for node in S_2:
             f.write(str(node) + ' ')
         f.write('-1\n')
-    queue = [S_1 + S_2]
-    while len(queue) > 0:
-        subG = queue.pop()
+    subG = S_1 + S_2
+    while True:
         C, N, A = SCG(A, opt.rounding_strategy, set(subG), N)
         S_1, S_2 = get_subgraphs(C, N, A)
         S_1 = list(S_1)
         S_2 = list(S_2)
         S = S_1 + S_2
-        if len(S) >= 10:
-            if len(S_2) > len(S_1):
-                S_1, S_2 = S_2, S_1
-            if len(S_2) == 0:
-                for node in S_1:
-                    f.write(str(node) + ' ')
-                f.write('-1 -1\n')
-            else:
-                for node in S_1:
-                    f.write(str(node) + ' ')
-                f.write('-1 ')
-                for node in S_2:
-                    f.write(str(node) + ' ')
-                f.write('-1\n')
-            queue.append(S)
+        if len(S) < 10:
+            break
+        if len(S_2) > len(S_1):
+            S_1, S_2 = S_2, S_1
+        if len(S_2) == 0:
+            for node in S_1:
+                f.write(str(node) + ' ')
+            f.write('-1 -1\n')
+        else:
+            for node in S_1:
+                f.write(str(node) + ' ')
+            f.write('-1 ')
+            for node in S_2:
+                f.write(str(node) + ' ')
+            f.write('-1\n')
+        subG = S
     f.close()
 else:
     raise Exception('Error: please specify dataset name in {} or just leave it blank to run ALL'.format(DATASET_LIST))
